@@ -1,11 +1,13 @@
 (function() {
   var observer = new MutationObserver(function(mutations) {
     const hasBurningMan = str => (
-      str && (
-        str.includes('burningman')  ||
-        str.includes('burning man') ||
-        str.includes('#theburn')
-      )
+      str && [
+      'burningman',
+      'burning man',
+      '#theburn',
+      'black rock city',
+      '#blackrockcity'
+      ].every((d) => str.includes(d))
     )
     mutations.forEach(function(mutation) {
       var newNodes = mutation.addedNodes;
@@ -15,7 +17,8 @@
         for (var ii = 0, nn = nodes.length; ii < nn; ii++)
         {
           var text = nodes[ii] ? nodes[ii].textContent.toLowerCase() : '';
-          if (hasBurningMan(text.toLocaleLowerCase()) && nodes[ii].style.display != 'none')
+          let refsBurningMan = hasBurningMan(text.toLocaleLowerCase())
+          if (nodes[ii].style.display != 'none' && refsBurningMan)
           {
             nodes[ii].style.display = 'none';
           }
